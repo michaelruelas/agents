@@ -31,7 +31,28 @@ Source of truth for skills installed across `opencode`, `claude`, and other agen
 
 ## Deploy
 
-Each skill in `skills/` is symlinked into both consumers:
+Use the `scripts/sync.sh` symlink deployer. Idempotent: safe to re-run after every pull.
+
+```bash
+./scripts/sync.sh           # add missing, fix mismatched, remove stale — at all consumers
+./scripts/sync.sh status    # dry-run, show what would change
+```
+
+Default consumers are `opencode` (`~/.config/opencode/skills/`), `claude` (`~/.claude/skills/`), and `hermes` (`~/.hermes/skills/`). Override with `AGENTS_CONSUMERS`:
+
+```bash
+AGENTS_CONSUMERS="claude:~/.claude/skills opencode:~/.config/opencode/skills" ./scripts/sync.sh
+```
+
+To invoke as `agents sync` from anywhere, symlink the script into your `PATH`:
+
+```bash
+ln -sf ~/.agents/scripts/sync.sh ~/.local/bin/agents
+```
+
+### Manual one-liner (legacy, no idempotency)
+
+If you don't want to use the script:
 
 ```bash
 # from this repo root
@@ -41,8 +62,6 @@ for s in skills/*/; do
   ln -sf "../../agents/skills/$name" ~/.claude/skills/"$name"
 done
 ```
-
-Existing symlinks in `~/.claude/skills/` are kept; add new ones for any skills that don't already have an entry.
 
 ## Folder convention
 
