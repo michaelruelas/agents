@@ -1,16 +1,33 @@
 # ~/.agents — canonical skills repo
 
-Source of truth for skills installed across `opencode`, `claude`, and `hermes`.
+Source of truth for skills installed across `opencode`, `claude`, and other agent platforms.
 
-## Layout
+## Inventory
 
-```
-skills/
-  <skill-name>/
-    SKILL.md           # required, with `name:` + `description:` frontmatter
-    references/        # optional supporting docs
-    agents/            # optional sub-agent definitions
-```
+12 skills. All deployed via symlinks to consumers.
+
+| Skill | Description | Origin | Size |
+|-------|-------------|--------|------|
+| `adhd/` | Parallel divergent ideation for coding agents. 5+ cognitive frames, isolates branches, separates generator/critic phases. | Manual | 16K |
+| `architecture-patterns/` | Clean/Hexagonal/Onion architecture + DDD for backend service design. | Manual | 36K |
+| `attach-review-to-pr/` | Add line-specific review comments to PRs via `gh` API. | Manual | 16K |
+| `code-review-excellence/` | Master code-review practices for constructive feedback. | Manual | 16K |
+| `find-docs/` | Retrieve up-to-date docs for any library/framework/SDK. | Manual | 8K |
+| `find-skills/` | Discover and install skills from open agent skills ecosystem. | Manual | 8K |
+| `gnhf/` | GNHF agent orchestrator: prepares and steers multi-hour coding runs. | Manual (folder renamed from `hfgn/`) | 8K |
+| `handoff/` | Compact current conversation into a handoff doc for another agent. | Manual | 4K |
+| `learn/` | Find and install skills from agentskill.sh. CLI: `npx @agentskill.sh/cli`. | agentskill.sh (refreshed 2026-07) | 36K |
+| `pr-review/` | Multi-lens PR review using 5 sub-agents (code-quality, design-pattern, error-handling, readability, solid). | Deploy copy of [michaelruelas/pr-reviewer](https://github.com/michaelruelas/pr-reviewer) | 68K |
+| `review-skill/` | Audit/improve SKILL.md files against Agent Skills spec. 10-dimension quality score. | agentskill.sh (refreshed 2026-07) | 20K |
+| `typescript-advanced-types/` | Master generics, conditional types, mapped types, template literals. | Manual | 20K |
+
+## Skill provenance
+
+| Source type | Skills |
+|-------------|--------|
+| Manual installs | adhd, architecture-patterns, attach-review-to-pr, code-review-excellence, find-docs, find-skills, gnhf, handoff, typescript-advanced-types |
+| agentskill.sh (`.skill-lock.json`) | learn, review-skill |
+| GitHub repo (deploy copy) | pr-review |
 
 ## Deploy
 
@@ -27,13 +44,20 @@ done
 
 Existing symlinks in `~/.claude/skills/` are kept; add new ones for any skills that don't already have an entry.
 
-## Skill provenance
+## Folder convention
 
-| Skill | Origin |
-|---|---|
-| `pr-review/` | Deploy copy of [michaelruelas/pr-reviewer](https://github.com/michaelruelas/pr-reviewer). Edit there, then re-copy. |
-| `learn/`, `review-skill/` | Installed via `npx @agentskill.sh/cli setup`. `contentSha` tracked in `.skill-lock.json`. |
-| Others | Manual installs. |
+Each skill lives in its own folder under `skills/<name>/`:
+
+```
+skills/<name>/
+  SKILL.md           # required: name + description frontmatter + body
+  references/        # optional: supporting docs
+  agents/            # optional: sub-agent definitions
+  README.md          # optional: only if extra context beyond SKILL.md
+  LICENSE            # optional
+```
+
+Folder name should match the `name:` field in SKILL.md frontmatter. If a folder doesn't match, rename it (see git history for the `hfgn` → `gnhf` rename).
 
 ## Adding a skill
 
