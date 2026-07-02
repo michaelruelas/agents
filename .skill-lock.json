@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "skills": {
+    "agentskill-sh/learn": {
+      "slug": "agentskill-sh/learn",
+      "contentSha": "e61662f",
+      "installedAt": "2026-07-02T00:00:00.000Z",
+      "agents": [
+        "cursor",
+        "hermes",
+        "opencode",
+        "claude-code"
+      ]
+    },
+    "agentskill-sh/review-skill": {
+      "slug": "agentskill-sh/review-skill",
+      "contentSha": "2e95823",
+      "installedAt": "2026-07-02T00:00:00.000Z",
+      "agents": [
+        "cursor",
+        "hermes",
+        "opencode",
+        "claude-code"
+      ]
+    }
+  },
+  "lastSelectedAgents": [
+    "cursor",
+    "hermes",
+    "opencode",
+    "claude-code"
+  ]
+}
