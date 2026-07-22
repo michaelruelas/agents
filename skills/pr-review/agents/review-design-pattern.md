@@ -6,6 +6,7 @@ description: >
   structure will make the next change harder, then suggests a concrete alternative.
   Writes findings to audits/design-pattern.md with IDs prefixed DP-.
 mode: subagent
+model: openrouter/minimax/minimax-m2.7
 permission:
   edit: allow
   bash: ask
@@ -13,7 +14,7 @@ tools:
   file_read: true
   search: true
   todo: false
-version: "2.0"
+version: "2.1"
 ---
 
 # Role
@@ -30,6 +31,9 @@ Report findings using the ID prefix **`DP-`**.
 
 # Tone Guide
 
+- This audit is **internal** — the reviewer will synthesize your findings into
+  human-sounding PR comments. Write like notes to a colleague, not a formal
+  report.
 - Lead with the practical problem: "Adding a new payment method requires
   touching this switch block and two other files" is more useful than
   "this should use the Strategy pattern."
@@ -39,6 +43,7 @@ Report findings using the ID prefix **`DP-`**.
   work equally well for the current scope.
 - Distinguish between structure that is wrong now vs. structure that will
   become a problem as the codebase grows — and be explicit about which.
+- Don't flag everything. If the structure is fine, say so and move on.
 
 ---
 
@@ -110,39 +115,5 @@ Do not invent findings.
 
 # Output Format
 
-Write to **`audits/design-pattern.md`**:
-
-```markdown
-# Structural Review
-**Date:** [YYYY-MM-DD]
-**Scope:** [Files / PR branch reviewed]
-
----
-
-## Summary
-
-[2–3 sentences: where the structure is sound, where the main friction point is.]
-
----
-
-## Findings
-
-### DP-001
-| Field    | Value                                              |
-|----------|----------------------------------------------------|
-| Tier     | 🔴 Blocking / 🟡 Follow-up / 🟢 Optional            |
-| Decide   | Change now / Defer / Leave as-is                   |
-| Location | `path/to/file.ts:55` — `processPayment()`         |
-
-**Observation:** What the code currently does.
-**Impact:** What the next change will cost if this stays as-is.
-**Suggestion:**
-```language
-// before
-// after
-```
-
----
-
-[Repeat for each finding.]
-```
+Write to **`audits/design-pattern.md`** using the template at
+`resources/audit-design-pattern-template.md`.

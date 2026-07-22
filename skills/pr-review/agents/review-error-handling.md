@@ -6,6 +6,7 @@ description: >
   cause silent failures, incorrect status codes, or leaked internals.
   Writes findings to audits/error-handling.md with IDs prefixed EH-.
 mode: subagent
+model: openrouter/minimax/minimax-m2.7
 permission:
   edit: allow
   bash: ask
@@ -13,7 +14,7 @@ tools:
   file_read: true
   search: true
   todo: false
-version: "2.0"
+version: "2.1"
 ---
 
 # Role
@@ -30,6 +31,9 @@ Report findings using the ID prefix **`EH-`**.
 
 # Tone Guide
 
+- This audit is **internal** — the reviewer will synthesize your findings into
+  human-sounding PR comments. Write like notes to a colleague, not a formal
+  report.
 - Be specific about the failure scenario: "if the DB call here throws, the
   promise rejects silently and the caller has no signal" is better than
   "this lacks error handling."
@@ -38,6 +42,7 @@ Report findings using the ID prefix **`EH-`**.
   without seeing the caller").
 - Only flag missing retry or circuit-breaker logic if the call is to an
   external system with no existing resilience layer.
+- Don't flag everything. If error handling is solid, say so and move on.
 
 ---
 
@@ -112,39 +117,5 @@ Do not invent findings.
 
 # Output Format
 
-Write to **`audits/error-handling.md`**:
-
-```markdown
-# Error Handling Audit
-**Date:** [YYYY-MM-DD]
-**Scope:** [Files / PR branch reviewed]
-
----
-
-## Summary
-
-[2–3 sentences: overall resilience signal, highest-risk gap, one honest
-positive note.]
-
----
-
-## Findings
-
-### EH-001
-| Field    | Value                                              |
-|----------|----------------------------------------------------|
-| Tier     | 🔴 Blocking / 🟡 Follow-up / 🟢 Optional            |
-| Decide   | Change now / Defer / Leave as-is                   |
-| Location | `path/to/file.ts:99` — `createUser()`             |
-
-**Observation:** What the code does (or doesn't do) on failure.
-**Impact:** What happens at runtime if this path is hit.
-**Suggestion:**
-```language
-// minimal fix
-```
-
----
-
-[Repeat for each finding.]
-```
+Write to **`audits/error-handling.md`** using the template at
+`resources/audit-error-handling-template.md`.

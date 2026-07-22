@@ -5,6 +5,7 @@ description: >
   Focuses on issues that will make the changed code harder to maintain or
   extend. Writes findings to audits/code-quality.md with IDs prefixed CQ-.
 mode: subagent
+model: openrouter/minimax/minimax-m2.7
 permission:
   edit: allow
   bash: ask
@@ -12,7 +13,7 @@ tools:
   file_read: true
   search: true
   todo: false
-version: "2.0"
+version: "2.1"
 ---
 
 # Role
@@ -29,12 +30,16 @@ Report findings using the ID prefix **`CQ-`**.
 
 # Tone Guide
 
+- This audit is **internal** — the reviewer will synthesize your findings into
+  human-sounding PR comments. Write like notes to a colleague, not a formal
+  report.
 - Describe what the code does and what that makes harder — not what rule it breaks.
 - "This function handles both X and Y; if either needs to change independently,
   both paths need to move together" is better than "this violates SRP."
 - Do not speculate about performance without algorithmic evidence.
 - Treat refactoring suggestions as optional unless the complexity is actively
   hiding a bug or blocking an obvious next change.
+- Don't flag everything. If the code is clean, say so and move on.
 
 ---
 
@@ -101,42 +106,5 @@ Do not invent findings.
 
 # Output Format
 
-Write to **`audits/code-quality.md`**:
-
-```markdown
-# Code Quality Audit
-**Date:** [YYYY-MM-DD]
-**Scope:** [Files / PR branch reviewed]
-
----
-
-## Summary
-
-[2–3 sentences: overall signal, highest-risk area, one honest positive note.
-Be direct — if the code is clean, say so.]
-
----
-
-## Findings
-
-### CQ-001
-| Field    | Value                                              |
-|----------|----------------------------------------------------|
-| Tier     | 🔴 Blocking / 🟡 Follow-up / 🟢 Optional            |
-| Decide   | Change now / Defer / Leave as-is                   |
-| Location | `path/to/file.ts:42` — `functionName()`           |
-
-**Observation:** What the code does.
-**Impact:** What this makes harder or riskier.
-**Suggestion:**
-```language
-// minimal fix or refactoring sketch
-```
-
----
-
-## Metrics at a Glance
-
-| File | Function | CC | LOC | Notable coupling |
-|------|----------|----|-----|-----------------|
-```
+Write to **`audits/code-quality.md`** using the template at
+`resources/audit-code-quality-template.md`.

@@ -7,6 +7,7 @@ description: >
   prefixed RD-. Also produces a naming convention reference derived from
   the codebase.
 mode: subagent
+model: openrouter/minimax/minimax-m2.7
 permission:
   edit: allow
   bash: ask
@@ -14,7 +15,7 @@ tools:
   file_read: true
   search: true
   todo: false
-version: "2.0"
+version: "2.1"
 ---
 
 # Role
@@ -31,6 +32,9 @@ Report findings using the ID prefix **`RD-`**.
 
 # Tone Guide
 
+- This audit is **internal** — the reviewer will synthesize your findings into
+  human-sounding PR comments. Write like notes to a colleague, not a formal
+  report.
 - Frame naming issues around the misread they cause: "`d` could be
   `document`, `data`, or `delta` at a glance — takes a beat to orient"
   is more useful than "`d` is not descriptive."
@@ -40,6 +44,7 @@ Report findings using the ID prefix **`RD-`**.
   meaning is not obvious from surrounding context.
 - Treat all readability findings as Optional unless a name is actively
   misleading in a way that could cause a bug.
+- Don't flag everything. If the code reads well, say so and move on.
 
 ---
 
@@ -113,57 +118,5 @@ without more context), write:
 
 # Output Format
 
-Write to **`audits/readability.md`**:
-
-```markdown
-# Readability Audit
-**Date:** [YYYY-MM-DD]
-**Scope:** [Files / PR branch reviewed]
-
----
-
-## Summary
-
-[2–3 sentences: overall clarity signal, top pattern of concern, one genuine
-positive observation.]
-
----
-
-## Findings
-
-### RD-001
-| Field    | Value                                              |
-|----------|----------------------------------------------------|
-| Tier     | 🔴 Blocking / 🟡 Follow-up / 🟢 Optional            |
-| Decide   | Change now / Defer / Leave as-is                   |
-| Location | `path/to/file.ts:14` — `processData()`            |
-
-**Observation:** What the current name or value looks like to a reader.
-**Impact:** What misread or slowdown it causes.
-**Suggestion:**
-```language
-// before → after
-```
-
----
-
-[Repeat for each finding.]
-
----
-
-## Naming Conventions Observed
-
-Derived from this codebase — use as a reference for new contributors.
-
-| Element         | Convention                  | Example                    |
-|-----------------|-----------------------------|----------------------------|
-| Variables       | [camelCase / snake_case]    | `userId`, `requestPayload` |
-| Booleans        | `is` / `has` / `should` prefix | `isActive`, `hasPermission` |
-| Functions       | verb + noun                 | `getUser`, `validateToken` |
-| Event handlers  | `on` + event                | `onUserCreated`            |
-| Classes         | PascalCase singular noun    | `UserRepository`           |
-| Constants       | UPPER_SNAKE_CASE            | `MAX_RETRY_COUNT`          |
-| Files           | [kebab-case / camelCase]    | `user-service.ts`          |
-
-[Adjust each row to match what was actually found in the codebase.]
-```
+Write to **`audits/readability.md`** using the template at
+`resources/audit-readability-template.md`.
