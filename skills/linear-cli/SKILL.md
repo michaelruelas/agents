@@ -11,87 +11,87 @@ Stateless CLI for Linear. Designed as MCP replacement — JSON output, no intera
 
 ```bash
 export LINEAR_API_KEY=lin_api_xxxxx        # set API key
-linear-cli auth login --token <key>        # or save to config
-linear-cli auth whoami                     # verify auth
+linear auth login --token <key>        # or save to config
+linear auth whoami                     # verify auth
 ```
 
 ## Issues
 
 ```bash
 # List
-linear-cli issue list --team ENG
-linear-cli issue list --team ENG --status "In Progress"
-linear-cli issue list --assignee me --priority 1
-linear-cli issue list --label bug --limit 10
+linear issue list --team ENG
+linear issue list --team ENG --status "In Progress"
+linear issue list --assignee me --priority 1
+linear issue list --label bug --limit 10
 
 # Get
-linear-cli issue get ENG-123
+linear issue get ENG-123
 
 # Create
-linear-cli issue create --title "Fix login bug" --team ENG
-linear-cli issue create --title "Big task" --team ENG --priority 1 --label bug
-linear-cli issue create --title "Sprint task" --team ENG --cycle <id> --assignee <user_id>
-linear-cli issue create --title "Refactor" --team ENG --description-file ./desc.md
+linear issue create --title "Fix login bug" --team ENG
+linear issue create --title "Big task" --team ENG --priority 1 --label bug
+linear issue create --title "Sprint task" --team ENG --cycle <id> --assignee <user_id>
+linear issue create --title "Refactor" --team ENG --description-file ./desc.md
 
 # Update
-linear-cli issue update ENG-123 --status "In Done"
-linear-cli issue update ENG-123 --assignee <user_id>
-linear-cli issue update ENG-123 --priority 2
-linear-cli issue update ENG-123 --label "in-review"
+linear issue update ENG-123 --status "In Done"
+linear issue update ENG-123 --assignee <user_id>
+linear issue update ENG-123 --priority 2
+linear issue update ENG-123 --label "in-review"
 
 # Search
-linear-cli issue search "login bug" --team ENG
+linear issue search "login bug" --team ENG
 ```
 
 ## Projects
 
 ```bash
-linear-cli project list
-linear-cli project get <project_id>
-linear-cli project create --name "Q3 Roadmap" --team ENG
-linear-cli project update <project_id> --name "Q3 Roadmap v2"
+linear project list
+linear project get <project_id>
+linear project create --name "Q3 Roadmap" --team ENG
+linear project update <project_id> --name "Q3 Roadmap v2"
 ```
 
 ## Cycles (sprints)
 
 ```bash
-linear-cli cycle list --team ENG
-linear-cli cycle get <cycle_id>
+linear cycle list --team ENG
+linear cycle get <cycle_id>
 ```
 
 ## Comments
 
 ```bash
-linear-cli comment list --issue ENG-123
-linear-cli comment create --issue ENG-123 --body "Looking into this"
-linear-cli comment create --issue ENG-123 --body-file ./update.md
+linear comment list --issue ENG-123
+linear comment create --issue ENG-123 --body "Looking into this"
+linear comment create --issue ENG-123 --body-file ./update.md
 ```
 
 ## Teams & users
 
 ```bash
-linear-cli team list
-linear-cli user list
-linear-cli user list --team ENG
+linear team list
+linear user list
+linear user list --team ENG
 ```
 
 ## Labels
 
 ```bash
-linear-cli label list
+linear label list
 ```
 
 ## Workflow states
 
 ```bash
-linear-cli status list --team ENG
+linear status list --team ENG
 ```
 
 ## Config
 
 ```bash
-linear-cli config show                     # current config
-linear-cli config set default_team ENG     # set default team
+linear config show                     # current config
+linear config set default_team ENG     # set default team
 ```
 
 ## Output
@@ -99,7 +99,7 @@ linear-cli config set default_team ENG     # set default team
 All commands return JSON by default. Add `--pretty` for formatted output:
 
 ```bash
-linear-cli issue get ENG-123 --pretty
+linear issue get ENG-123 --pretty
 ```
 
 ## Exit codes
@@ -120,7 +120,7 @@ linear-cli issue get ENG-123 --pretty
 Use cursor-based pagination for large result sets:
 
 ```bash
-linear-cli issue list --team ENG --limit 50 --cursor "abc123"
+linear issue list --team ENG --limit 50 --cursor "abc123"
 ```
 
 ## Gotchas
@@ -130,4 +130,4 @@ linear-cli issue list --team ENG --limit 50 --cursor "abc123"
 - Priority integers: 0=None, 1=Urgent, 2=High, 3=Medium, 4=Low
 - `--description-file` preferred over `--description` for multi-line markdown
 - No `--pretty` = raw JSON output (good for piping)
-- Auth via `LINEAR_API_KEY` env var or `linear-cli auth login`
+- Auth via `LINEAR_API_KEY` env var or `linear auth login`
